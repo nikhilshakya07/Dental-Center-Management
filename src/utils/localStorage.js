@@ -6,7 +6,7 @@ const STORAGE_KEYS = {
   };
   
   export const localStorageService = {
-    // Initialize data
+    
     initializeData: (data) => {
       Object.entries(data).forEach(([key, value]) => {
         const storageKey = STORAGE_KEYS[key.toUpperCase()];
@@ -16,7 +16,6 @@ const STORAGE_KEYS = {
       });
     },
   
-    // Generic get/set methods
     getItem: (key) => {
       try {
         const item = localStorage.getItem(key);
@@ -36,8 +35,7 @@ const STORAGE_KEYS = {
         return false;
       }
     },
-  
-    // Specific methods for our app
+    
     getUsers: () => localStorageService.getItem(STORAGE_KEYS.USERS) || [],
     setUsers: (users) => localStorageService.setItem(STORAGE_KEYS.USERS, users),
   
@@ -52,7 +50,6 @@ const STORAGE_KEYS = {
   
     clearCurrentUser: () => localStorage.removeItem(STORAGE_KEYS.CURRENT_USER),
   
-    // Helper methods
     generateId: () => Date.now().toString() + Math.random().toString(36).substr(2, 9),
     
     clearAll: () => {

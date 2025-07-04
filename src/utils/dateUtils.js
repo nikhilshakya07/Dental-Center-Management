@@ -1,4 +1,4 @@
-import { format, parseISO, isValid, addDays, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
+import { format, parseISO, isValid, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns';
 
 export const dateUtils = {
   formatDate: (date, formatString = 'dd/MM/yyyy') => {
@@ -15,10 +15,24 @@ export const dateUtils = {
     return dateUtils.formatDate(date, 'HH:mm');
   },
 
+  formatDateForInput: (date) => {
+    return dateUtils.formatDate(date, 'yyyy-MM-dd');
+  },
+
+  formatTimeForInput: (date) => {
+    return dateUtils.formatDate(date, 'HH:mm');
+  },
+
   isToday: (date) => {
     const today = new Date();
     const compareDate = typeof date === 'string' ? parseISO(date) : date;
     return format(today, 'yyyy-MM-dd') === format(compareDate, 'yyyy-MM-dd');
+  },
+
+  isSameDay: (date1, date2) => {
+    const firstDate = typeof date1 === 'string' ? parseISO(date1) : date1;
+    const secondDate = typeof date2 === 'string' ? parseISO(date2) : date2;
+    return isSameDay(firstDate, secondDate);
   },
 
   isFuture: (date) => {

@@ -22,11 +22,18 @@ export const PatientProvider = ({ children }) => {
   const loadPatients = () => {
     setLoading(true);
     const patientsData = localStorageService.getPatients();
+    console.log('Loading patients from localStorage:', patientsData);
     setPatients(patientsData);
     setLoading(false);
   };
 
   const addPatient = (patientData) => {
+    if (!patientData) {
+      console.error('Attempted to add patient with no data');
+      return null;
+    }
+
+    console.log('Adding new patient:', patientData);
     const newPatient = {
       ...patientData,
       id: localStorageService.generateId(),
@@ -34,12 +41,18 @@ export const PatientProvider = ({ children }) => {
     };
     
     const updatedPatients = [...patients, newPatient];
+    console.log('Saving updated patients to localStorage:', updatedPatients);
     setPatients(updatedPatients);
     localStorageService.setPatients(updatedPatients);
     return newPatient;
   };
 
   const updatePatient = (id, patientData) => {
+    if (!id || !patientData) {
+      console.error('Invalid update parameters:', { id, patientData });
+      return;
+    }
+
     const updatedPatients = patients.map(patient =>
       patient.id === id ? { ...patient, ...patientData } : patient
     );

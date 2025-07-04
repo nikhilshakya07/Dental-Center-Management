@@ -29,6 +29,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
+    // Simulate network request delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     const users = localStorageService.getUsers();
     const user = users.find(u => u.email === email && u.password === password);
     
@@ -49,7 +52,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    // Simulate network request delay
+    await new Promise(resolve => setTimeout(resolve, 500));
     setCurrentUser(null);
     localStorageService.clearCurrentUser();
   };

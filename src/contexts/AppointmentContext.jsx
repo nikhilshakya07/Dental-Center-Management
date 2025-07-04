@@ -27,26 +27,67 @@ export const AppointmentProvider = ({ children }) => {
   };
 
   const addAppointment = (appointmentData) => {
-    const newAppointment = {
-      ...appointmentData,
-      id: localStorageService.generateId(),
-      createdAt: new Date().toISOString(),
-      status: 'Scheduled',
-      files: []
-    };
-    
-    const updatedAppointments = [...appointments, newAppointment];
-    setAppointments(updatedAppointments);
-    localStorageService.setAppointments(updatedAppointments);
-    return newAppointment;
+    try {
+      const newAppointment = {
+        ...appointmentData,
+        id: localStorageService.generateId(),
+        createdAt: new Date().toISOString(),
+        status: appointmentData.status || 'Scheduled',
+        attachments: appointmentData.attachments || []
+      };
+
+      // If this is a next appointment, link it to the parent appointment
+      if (appointmentData.previousAppointmentId) {
+        newAppointment.previousAppointmentId = appointmentData.previousAppointmentId;
+      }
+      
+      const updatedAppointments = [...appointments, newAppointment];
+      const success = localStorageService.setAppointments(updatedAppointments);
+      
+      if (!success) {
+        throw new Error('Failed to save appointment to storage');
+      }
+      
+      setAppointments(updatedAppointments);
+      return newAppointment;
+    } catch (error) {
+      console.error('Error adding appointment:', error);
+      throw new Error('Failed to create appointment. Please try again.');
+    }
   };
 
-  const updateAppointment = (id, appointmentData) => {
-    const updatedAppointments = appointments.map(appointment =>
-      appointment.id === id ? { ...appointment, ...appointmentData } : appointment
-    );
-    setAppointments(updatedAppointments);
-    localStorageService.setAppointments(updatedAppointments);
+  const updateAppointment = async (id, appointmentData) => {
+    try {
+      // If there's a next appointment date, create it
+      if (appointmentData.nextAppointmentDate && !appointmentData.nextAppointmentCreated) {
+        const nextAppointment = {
+          patientId: appointmentData.patientId,
+          title: appointmentData.nextAppointmentNotes ? appointmentData.nextAppointmentNotes : 'Follow-up Appointment',
+          description: `Follow-up appointment for: ${appointmentData.title}`,
+          appointmentDate: appointmentData.nextAppointmentDate,
+          status: 'Scheduled',
+          previousAppointmentId: id
+        };
+        
+        await addAppointment(nextAppointment);
+        appointmentData.nextAppointmentCreated = true;
+      }
+
+      const updatedAppointments = appointments.map(appointment =>
+        appointment.id === id ? { ...appointment, ...appointmentData } : appointment
+      );
+      
+      const success = localStorageService.setAppointments(updatedAppointments);
+      
+      if (!success) {
+        throw new Error('Failed to save updated appointment to storage');
+      }
+      
+      setAppointments(updatedAppointments);
+    } catch (error) {
+      console.error('Error updating appointment:', error);
+      throw new Error('Failed to update appointment. Please try again.');
+    }
   };
 
   const deleteAppointment = (id) => {
@@ -85,18 +126,45 @@ export const AppointmentProvider = ({ children }) => {
     });
   };
 
-  const addFileToAppointment = (appointmentId, fileData) => {
-    const updatedAppointments = appointments.map(appointment => {
-      if (appointment.id === appointmentId) {
-        return {
-          ...appointment,
-          files: [...(appointment.files || []), fileData]
-        };
+  const downloadFile = (fileData) => {
+    try {
+      // Extract the mime type and base64 data
+      const [mimeTypeHeader, base64Data] = fileData.data.split(',');
+      const mimeType = mimeTypeHeader.split(':')[1].split(';')[0];
+      
+      // Convert base64 to blob
+      const byteCharacters = atob(base64Data);
+      const byteArrays = [];
+      
+      for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        const byteNumbers = new Array(slice.length);
+        
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+        
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
       }
-      return appointment;
-    });
-    setAppointments(updatedAppointments);
-    localStorageService.setAppointments(updatedAppointments);
+      
+      const blob = new Blob(byteArrays, { type: mimeType });
+      const url = window.URL.createObjectURL(blob);
+      
+      // Create temporary link and trigger download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileData.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      return true;
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      return false;
+    }
   };
 
   const value = {
@@ -110,7 +178,7 @@ export const AppointmentProvider = ({ children }) => {
     getUpcomingAppointments,
     getTodayAppointments,
     getAppointmentsByDateRange,
-    addFileToAppointment,
+    downloadFile,
     refreshAppointments: loadAppointments
   };
 

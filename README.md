@@ -51,7 +51,6 @@ A modern, responsive web application for managing a dental practice. Built with 
 
 3. Create a `.env` file in the root directory:
    ```env
-   VITE_API_URL=your_api_url
    VITE_STORAGE_KEY=your_storage_key
    ```
 

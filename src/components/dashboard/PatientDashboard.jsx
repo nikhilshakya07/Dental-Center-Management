@@ -54,7 +54,6 @@ const PatientDashboard = () => {
         </p>
       </div>
 
-      {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {kpis.map((kpi, index) => (
           <KPICard
@@ -68,7 +67,6 @@ const PatientDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Upcoming Appointments */}
         <div className="card">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Upcoming Appointments</h3>
           <div className="space-y-3">
@@ -94,7 +92,6 @@ const PatientDashboard = () => {
           </div>
         </div>
 
-        {/* Recent Treatment History */}
         <div className="card">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Treatment History</h3>
           <div className="space-y-3">
@@ -123,7 +120,6 @@ const PatientDashboard = () => {
         </div>
       </div>
 
-      {/* Patient Information */}
       <div className="card">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Personal Information</h3>
         {patientData && (

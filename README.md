@@ -1,32 +1,61 @@
 # Dental Center Dashboard
 
-A modern, responsive web application for managing a dental practice. Built with React, TailwindCSS, and modern web technologies.
+A fully responsive frontend dashboard for managing a dental clinic's appointments, patients, and treatment records. Built with React, TailwindCSS, and modern web technologies.
+
+## 🔗 Live Demo
+
+[🔴 Deployed on Vercel](https://your-deployment-link.vercel.app/)  
+[📂 GitHub Repository](https://github.com/nikhilshakya07/Dental-Center-Management)
+
+---
 
 ## Features
 
-- 🔐 **User Authentication**
+### 👨‍⚕️ Admin (Dentist)
+  - Secure login (simulated with hardcoded credentials)
+  - View, add, edit, delete patients
+  - Manage appointments (incidents) with cost, treatment details, status, next appointment
+  - Upload treatment files (PDFs, images)
+  - View upcoming appointments in a calendar (monthly/weekly)
+  - Admin dashboard with KPIs (pending/completed treatments, revenue, top patients, etc.)
+
+### 👤 Patient
+  - Login (simulated)
+  - View their own appointment history and upcoming visits
+  - Access cost, treatment details, and uploaded files
+
+### 🔐 User Authentication
   - Secure login/logout
   - Role-based access control (Admin/Patient)
   - Protected routes and authorized actions
 
-- 👥 **Patient Management**
+### 👥 Patient Management
   - Complete patient records
   - Medical history tracking
   - Emergency contact information
   - Admin-only access for patient data
 
-- 📅 **Appointment System**
+### 📅 Appointment System
   - Interactive calendar view
   - Treatment notes and history
   - File attachments support (images/PDFs)
   - Next appointment scheduling
   - Email notifications (coming soon)
 
-- 📊 **Dashboard & Analytics**
+### 📊 Dashboard & Analytics
   - Role-specific KPIs
   - Appointment statistics
   - Revenue tracking (admin)
   - Treatment history (patients)
+
+## 🧠 Tech Stack
+  - **React.js** (functional components + hooks)
+  - **React Router DOM**
+  - **Context API** for global state management
+  - **Tailwind CSS v4** for modern styling
+  - **LocalStorage** (custom utility + hooks)
+  - **No backend/API** – everything simulated
+  - **File uploads** via Base64 / Blob URLs
 
 ## Getting Started
 
@@ -104,18 +133,9 @@ src/
 
 ## Known Issues
 
-1. Calendar week view implementation pending
-2. File preview not supported for all PDF versions
-3. Performance optimization needed for large patient lists
-4. Mobile calendar view needs refinement
-
-## Future Enhancements
-
-1. Email notifications for appointments
-2. Integration with dental imaging systems
-3. Patient portal for medical history updates
-4. Advanced reporting and analytics
-5. Multi-language support
+1. File preview not supported after uploading the file
+2. Performance optimization needed for large patient lists
+3. Mobile calendar view needs refinement
 
 ## Contributing
 
@@ -128,6 +148,9 @@ src/
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Developed By
+**Nikhil Shakya**
 
 ## Support
 

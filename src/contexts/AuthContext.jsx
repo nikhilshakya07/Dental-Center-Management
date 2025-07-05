@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     // Initialize data on first load
     localStorageService.initializeData(initialData);
     
-    // Check for existing user session
+   
     const savedUser = localStorageService.getCurrentUser();
     if (savedUser) {
       setCurrentUser(savedUser);
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // Simulate network request delay
+    
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     const users = localStorageService.getUsers();
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    // Simulate network request delay
+   
     await new Promise(resolve => setTimeout(resolve, 500));
     setCurrentUser(null);
     localStorageService.clearCurrentUser();

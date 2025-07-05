@@ -36,7 +36,6 @@ export const AppointmentProvider = ({ children }) => {
         attachments: appointmentData.attachments || []
       };
 
-      // If this is a next appointment, link it to the parent appointment
       if (appointmentData.previousAppointmentId) {
         newAppointment.previousAppointmentId = appointmentData.previousAppointmentId;
       }
@@ -58,7 +57,6 @@ export const AppointmentProvider = ({ children }) => {
 
   const updateAppointment = async (id, appointmentData) => {
     try {
-      // If there's a next appointment date, create it
       if (appointmentData.nextAppointmentDate && !appointmentData.nextAppointmentCreated) {
         const nextAppointment = {
           patientId: appointmentData.patientId,
@@ -128,7 +126,6 @@ export const AppointmentProvider = ({ children }) => {
 
   const downloadFile = (fileData) => {
     try {
-      // Extract the mime type and base64 data
       const [mimeTypeHeader, base64Data] = fileData.data.split(',');
       const mimeType = mimeTypeHeader.split(':')[1].split(';')[0];
       
@@ -151,7 +148,6 @@ export const AppointmentProvider = ({ children }) => {
       const blob = new Blob(byteArrays, { type: mimeType });
       const url = window.URL.createObjectURL(blob);
       
-      // Create temporary link and trigger download
       const link = document.createElement('a');
       link.href = url;
       link.download = fileData.name;

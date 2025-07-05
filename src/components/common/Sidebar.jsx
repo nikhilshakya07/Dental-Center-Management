@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* Backdrop */}
+      
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
@@ -38,14 +38,12 @@ const Sidebar = ({ isOpen, onClose }) => {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`
           md:block w-64 flex-shrink-0 bg-white border-r border-gray-200
           ${isOpen ? '' : 'hidden'}
         `}
       >
-        {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center space-x-2">
             <User size={20} className="text-gray-500" />
@@ -61,7 +59,6 @@ const Sidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Navigation */}
         <div className="p-4">
           <nav className="space-y-2">
             {navItems.map((item) => {
@@ -72,7 +69,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  onClick={() => onClose()} // Close menu on mobile when link is clicked
+                  onClick={() => onClose()}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-primary-100 text-primary-700'
@@ -88,7 +85,6 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
       </aside>
 
-      {/* Mobile Sidebar */}
       {isOpen && (
         <div
           className={`
@@ -96,7 +92,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             w-64 bg-white border-r border-gray-200
           `}
         >
-          {/* Mobile Content */}
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <div className="flex items-center space-x-2">

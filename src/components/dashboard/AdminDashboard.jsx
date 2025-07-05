@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { usePatients } from '../../contexts/PatientContext';
 import { useAppointments } from '../../contexts/AppointmentContext';
 import KPICard from './KPICard';
@@ -11,10 +11,16 @@ import {
   CheckCircle 
 } from 'lucide-react';
 import { dateUtils } from '../../utils/dateUtils';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { patients } = usePatients();
   const { appointments, getUpcomingAppointments, getTodayAppointments } = useAppointments();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('Current patients in AdminDashboard:', patients);
+  }, [patients]);
 
   // Calculate KPIs
   const totalPatients = patients.length;
@@ -108,20 +114,31 @@ const AdminDashboard = () => {
         <div className="card">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Patients</h3>
           <div className="space-y-3">
-            {patients.length > 0 ? (
-              patients.slice(-5).reverse().map((patient) => (
-                <div key={patient.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900">{patient.name}</p>
-                    <p className="text-sm text-gray-600">{patient.email}</p>
+            {patients && patients.length > 0 ? (
+              patients
+                .filter(patient => patient && patient.name && patient.email) // Only show patients with required data
+                .slice(-5)
+                .reverse()
+                .map((patient) => (
+                  <div key={patient.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium text-gray-900">{patient.name || 'N/A'}</p>
+                      <p className="text-sm text-gray-600">{patient.email || 'N/A'}</p>
+                      <p className="text-sm text-gray-600">{patient.contact || 'N/A'}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-gray-600">
+                        {patient.createdAt ? dateUtils.formatDate(patient.createdAt) : 'N/A'}
+                      </p>
+                      <button
+                        onClick={() => navigate(`/patients/${patient.id}`)}
+                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                      >
+                        View Details
+                      </button>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-600">
-                      {dateUtils.formatDate(patient.createdAt)}
-                    </p>
-                  </div>
-                </div>
-              ))
+                ))
             ) : (
               <p className="text-gray-500 text-center py-4">No patients registered</p>
             )}

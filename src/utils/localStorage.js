@@ -1,12 +1,16 @@
+const STORAGE_PREFIX = import.meta.env.VITE_STORAGE_KEY;
+if (!STORAGE_PREFIX) {
+  throw new Error('Storage key not configured. Please check your environment variables.');
+}
+
 const STORAGE_KEYS = {
-    USERS: 'dental_users',
-    PATIENTS: 'dental_patients',
-    APPOINTMENTS: 'dental_appointments',
-    CURRENT_USER: 'dental_current_user'
-  };
+    USERS: `${STORAGE_PREFIX}_users`,
+    PATIENTS: `${STORAGE_PREFIX}_patients`,
+    APPOINTMENTS: `${STORAGE_PREFIX}_appointments`,
+    CURRENT_USER: `${STORAGE_PREFIX}_current_user`
+};
   
-  export const localStorageService = {
-    
+export const localStorageService = {
     initializeData: (data) => {
       Object.entries(data).forEach(([key, value]) => {
         const storageKey = STORAGE_KEYS[key.toUpperCase()];
@@ -57,6 +61,4 @@ const STORAGE_KEYS = {
         localStorage.removeItem(key);
       });
     }
-  };
-  
-  export { STORAGE_KEYS };
+};

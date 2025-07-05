@@ -16,7 +16,6 @@ const PatientList = () => {
 
   return (
     <div className="space-y-4">
-      {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
         <input
@@ -28,7 +27,6 @@ const PatientList = () => {
         />
       </div>
 
-      {/* Patients Table */}
       <div className="overflow-x-auto">
         {loading ? (
           <div className="flex justify-center items-center py-8">
@@ -77,7 +75,6 @@ const PatientList = () => {
         )}
       </div>
 
-      {/* Patient Details Modal */}
       <Modal
         isOpen={!!selectedPatient}
         onClose={() => setSelectedPatient(null)}

@@ -50,7 +50,6 @@ const PatientForm = ({ patient = null, onSubmit, onCancel }) => {
     
     if (!validateForm()) return;
     
-    // Trim all string values
     const trimmedData = Object.entries(formData).reduce((acc, [key, value]) => ({
       ...acc,
       [key]: typeof value === 'string' ? value.trim() : value
@@ -82,7 +81,6 @@ const PatientForm = ({ patient = null, onSubmit, onCancel }) => {
       [name]: value
     }));
     
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,

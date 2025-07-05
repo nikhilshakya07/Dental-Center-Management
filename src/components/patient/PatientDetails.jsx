@@ -20,7 +20,6 @@ const PatientDetails = ({ patient, onClose }) => {
 
   const handleDeletePatient = async () => {
     if (window.confirm('Are you sure you want to delete this patient? This action cannot be undone.')) {
-      // Delete all appointments for this patient
       patientAppointments.forEach(appointment => {
         deleteAppointment(appointment.id);
       });
@@ -42,7 +41,6 @@ const PatientDetails = ({ patient, onClose }) => {
 
   return (
     <div className="space-y-6">
-      {/* Patient Information */}
       <div className="space-y-4">
         <div className="flex justify-between">
           <div>
@@ -97,7 +95,6 @@ const PatientDetails = ({ patient, onClose }) => {
         </div>
       </div>
 
-      {/* Appointment History */}
       <div className="space-y-4">
         <h3 className="text-lg font-medium text-gray-900">Appointment History</h3>
         <div className="space-y-2">

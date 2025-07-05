@@ -7,10 +7,9 @@ import LoadingSpinner from '../common/LoadingSpinner';
 
 const AppointmentCalendar = ({ appointments = [], onDayClick, loading = false }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [view, setView] = useState('month'); // 'month' or 'week'
+  const [view, setView] = useState('month');
   const { isAdmin } = useAuth();
 
-  // Get days based on current view
   const getDays = () => {
     if (view === 'week') {
       const start = startOfWeek(currentDate);
@@ -25,7 +24,6 @@ const AppointmentCalendar = ({ appointments = [], onDayClick, loading = false })
 
   const days = getDays();
 
-  // Group appointments by date
   const appointmentsByDate = appointments.reduce((acc, appointment) => {
     const date = format(parseISO(appointment.appointmentDate), 'yyyy-MM-dd');
     if (!acc[date]) {

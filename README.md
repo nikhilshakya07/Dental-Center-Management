@@ -2,12 +2,14 @@
 
 A fully responsive frontend dashboard for managing a dental clinic's appointments, patients, and treatment records. Built with React, TailwindCSS, and modern web technologies.
 
+![Denter Center Screenshot](public/Screenshot%202025-07-06%20154906.png)
+
 ## 🔗 Live Demo
 
-[🔴 Deployed on Vercel](https://your-deployment-link.vercel.app/)  
-[📂 GitHub Repository](https://github.com/nikhilshakya07/Dental-Center-Management)
+[ Live Application ](https://your-deployment-link.vercel.app/)  
 
----
+[ GitHub Repository](https://github.com/nikhilshakya07/Dental-Center-Management)
+
 
 ## Features
 
@@ -149,9 +151,14 @@ src/
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Developed By
-**Nikhil Shakya**
-
 ## Support
 
 For support, email nikhilshakya1308@gmail.com or open an issue in the repository.
+
+## Developed By
+
+**Nikhil Shakya**
+
+**GitHub**: https://github.com/nikhilshakya07
+
+**LinkedIn**: https://www.linkedin.com/in/nikhil-shakya07/

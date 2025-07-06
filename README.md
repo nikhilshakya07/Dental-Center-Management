@@ -6,7 +6,7 @@ A fully responsive frontend dashboard for managing a dental clinic's appointment
 
 ## 🔗 Live Demo
 
-[ Live Application ](https://your-deployment-link.vercel.app/)  
+[ Live Application ](https://dental-center-management-pi.vercel.app)  
 
 [ GitHub Repository](https://github.com/nikhilshakya07/Dental-Center-Management)
 
